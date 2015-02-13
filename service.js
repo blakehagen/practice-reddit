@@ -8,7 +8,6 @@ app.service('firebaseService', function($http, $q) {
 			method: 'GET',
 			url: 'https://devmtn.firebaseio.com/posts.json'
 		}).then(function(response) {
-			console.log(response);
 			deferred.resolve(response.data);
 		});
 		return deferred.promise;
@@ -16,20 +15,20 @@ app.service('firebaseService', function($http, $q) {
 
 
 	this.addPost = function(post) {
+		var deferred = $q.defer();
 		post.timestamp = Date.now();
 		post.comments = [];
 		post.karma = 0;
 		post.id = guid();
-		var deferred = $q.defer();
 		$http({
 			method: 'PUT',
-			url: 'https://devmtn.firebaseio.com/posts/' + post.id + '.json'
+			url: 'https://devmtn.firebaseio.com/posts/' + post.id + '.json',
+			data: post
+		}).then(function(response) {
+			deferred.resolve(response.data);
 		});
-	}
-
-
-
-
+		return deferred.promise;
+	};
 
 
   var guid = function() {
@@ -41,6 +40,9 @@ app.service('firebaseService', function($http, $q) {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
   }
+
+
+
 
 
 
