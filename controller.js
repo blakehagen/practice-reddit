@@ -6,6 +6,10 @@ app.controller('PostsController', function($scope, firebaseService) {
 		$scope.posts = response;
 	});
 
-
+	$scope.addPost = function() {
+		firebaseService.addPost($scope.newPost).then(function() {
+			getPosts();
+		})
+	}
 
 });
