@@ -8,6 +8,7 @@ app.service('firebaseService', function($http, $q) {
 			method: 'GET',
 			url: 'https://devmtn.firebaseio.com/posts.json'
 		}).then(function(response) {
+			console.log(response);
 			deferred.resolve(response.data);
 		});
 		return deferred.promise;
